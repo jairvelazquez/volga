@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: volga
+  r2dbc:
+    url:
+    username:
+    password:
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    org.springframework.r2dbc: DEBUG
