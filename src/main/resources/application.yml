@@ -5,11 +5,21 @@ spring:
     activate:
       on-profile: dev
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/volgadev
-    username: user
-    password: password
+    url: r2dbc:postgresql://${RDS_HOST}:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
   main:
     web-application-type: reactive
 logging:
   level:
     root: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  r2dbc:
+    url: r2dbc:postgresql://postgres_local:5432/${POSTGRES_DB_LOCAL}
+    username: ${POSTGRES_USER_LOCAL}
+    password: ${POSTGRES_PASSWORD_LOCAL}

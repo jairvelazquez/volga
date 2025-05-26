@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  postgres_local:
+    image: postgres:15
+    container_name: volga_postgres_local
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_LOCAL}
+      POSTGRES_USER: ${POSTGRES_USER_LOCAL}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_LOCAL}
+    volumes:
+      - postgres_data_local:/var/lib/postgresql/data
+
+  backend:
+    image: volga
+    container_name: volga_backend_app
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - postgres_local
+
+volumes:
+  postgres_data_local:
