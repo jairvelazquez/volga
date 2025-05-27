@@ -5,7 +5,7 @@ spring:
     activate:
       on-profile: dev
   r2dbc:
-    url: r2dbc:postgresql://${RDS_HOST}:5432/${POSTGRES_DB}
+    url: r2dbc:postgresql://${RDS_HOST}:5432/${POSTGRES_DB}?sslmode=require
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
   main:

@@ -3,6 +3,7 @@ package com.jair.velazquez.volga.service;
 
 import com.jair.velazquez.volga.model.Reservation;
 import com.jair.velazquez.volga.repository.ReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -10,11 +11,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class ReservationService {
 
-    private final ReservationRepository reservationRepository;
-
-    public ReservationService(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
-    }
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     public Mono<Reservation> createReservation(Reservation reservation) {
         return reservationRepository.save(reservation);

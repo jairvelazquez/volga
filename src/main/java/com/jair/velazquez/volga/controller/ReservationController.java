@@ -2,6 +2,7 @@ package com.jair.velazquez.volga.controller;
 
 import com.jair.velazquez.volga.model.Reservation;
 import com.jair.velazquez.volga.service.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,8 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/reservations")
 public class ReservationController {
 
-    private final ReservationService reservationService;
-
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
-    }
+    @Autowired
+    private ReservationService reservationService;
 
     @PostMapping
     public Mono<ResponseEntity<Reservation>> createReservation(@RequestBody Reservation reservation) {
