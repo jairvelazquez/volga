@@ -12,35 +12,33 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/reservations")
 public class ReservationController {
 
-    private ReservationService reservationService;
-
+    private final ReservationService reservationService;
 
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
+    @PostMapping
+    public Mono<ResponseEntity<Reservation>> createReservation(@RequestBody Reservation reservation) {
+        return reservationService.createReservation(reservation)
+                .map(savedReservation -> ResponseEntity.status(HttpStatus.CREATED).body(savedReservation));
+    }
 
     @GetMapping
     public Flux<Reservation> getAllReservations() {
-        return reservationService.findAll();
+        return reservationService.getAllReservations();
     }
 
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Reservation>> getReservationById(@PathVariable Long id) {
-        return reservationService.findById(id)
-                .map(reservation -> ResponseEntity.ok(reservation))
+        return reservationService.getReservationById(id)
+                .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public Mono<ResponseEntity<Reservation>> createReservation(@RequestBody Reservation reservation) {
-        return reservationService.save(reservation)
-                .map(savedReservation -> ResponseEntity.status(HttpStatus.CREATED).body(savedReservation));
     }
 
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> deleteReservation(@PathVariable Long id) {
-        return reservationService.deleteById(id)
+        return reservationService.deleteReservation(id)
                 .then(Mono.just(ResponseEntity.noContent().build()));
     }
 }
