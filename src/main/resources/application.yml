@@ -10,6 +10,11 @@ spring:
     password: ${POSTGRES_PASSWORD}
   main:
     web-application-type: reactive
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://cognito-idp.${AWS_REGION}.amazonaws.com/${COGNITO_POOL_ID}
 logging:
   level:
     root: INFO
